@@ -5,7 +5,7 @@ export default function Logo() {
 			height="24"
 			viewBox="0 0 24 24"
 			xmlns="http://www.w3.org/2000/svg"
-			className="inline-block fill-gray-light-12 dark:fill-white"
+			className="inline-block fill-gray-light-12 dark:fill-black"
 		>
 			<path
 				fillRule="evenodd"
