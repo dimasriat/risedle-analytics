@@ -2,6 +2,7 @@ import moment from "moment";
 import Bar from "../components/Chart/Bar";
 import Col from "../components/Col";
 import Row from "../components/Row";
+import WalletLink from "../components/WalletLink";
 import { useGraph } from "../hooks/useGraph";
 
 export default function Mint() {
@@ -76,24 +77,15 @@ export default function Mint() {
 									moment().format("YYYY-MM-DD")
 							)
 							.reverse()
-							.map((item) => (
-								<tr>
+							.map((item, index) => (
+								<tr key={index}>
 									<td style={{ border: "1px solid black" }}>
 										{moment
 											.unix(parseInt(item.timestamp))
 											.format("HH:mm")}
 									</td>
 									<td style={{ border: "1px solid black" }}>
-										<a
-											href={
-												"https://arbiscan.io/address/" +
-												item.sender.id
-											}
-											target="_blank"
-											rel="noreferrer"
-										>
-											{item.sender.id}
-										</a>
+										<WalletLink address={item.sender.id}/>
 									</td>
 									<td style={{ border: "1px solid black" }}>
 										{parseFloat(item.mintedAmount).toFixed(

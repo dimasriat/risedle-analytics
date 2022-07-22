@@ -3,6 +3,7 @@ import Bar from "../components/Chart/Bar";
 import Col from "../components/Col";
 import Row from "../components/Row";
 import { useGraph } from "../hooks/useGraph";
+import WalletLink from "../components/WalletLink";
 
 export default function Deposit() {
 	const { data, loading } = useGraph(`
@@ -76,24 +77,15 @@ export default function Deposit() {
 									moment().format("YYYY-MM-DD")
 							)
 							.reverse()
-							.map((item) => (
-								<tr>
+							.map((item, index) => (
+								<tr key={index}>
 									<td style={{ border: "1px solid black" }}>
 										{moment
 											.unix(parseInt(item.timestamp))
 											.format("HH:mm")}
 									</td>
 									<td style={{ border: "1px solid black" }}>
-										<a
-											href={
-												"https://arbiscan.io/address/" +
-												item.sender.id
-											}
-											target="_blank"
-											rel="noreferrer"
-										>
-											{item.sender.id}
-										</a>
+										<WalletLink address={item.sender.id} />
 									</td>
 									<td style={{ border: "1px solid black" }}>
 										{parseFloat(item.amountUSD).toFixed(2)}
