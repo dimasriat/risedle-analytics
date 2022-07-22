@@ -3,14 +3,23 @@ import Line from "../components/Chart/Line";
 import Col from "../components/Col";
 import Row from "../components/Row";
 import { useFetch } from "../hooks/useFetch";
+import { useGraph } from "../hooks/useGraph";
 
 export default function PriceComparison() {
 	const { data: dataETH, loading: loadingETH } = useFetch(
 		"https://api.coingecko.com/api/v3/coins/ethereum/market_chart?vs_currency=usd&days=30"
 	);
-	const { data: dataETHRISE, loading: loadingETHRISE } = useFetch(
-		"https://snapshot-arbitrum.risedle.com/v1/leveragedTokens/monthly/0x46D06cf8052eA6FdbF71736AF33eD23686eA1452"
-	);
+	const { data: dataETHRISE, loading: loadingETHRISE } = useGraph(`
+    {
+		hourlyPriceDatas(orderBy: timestamp, where: {timestamp_gte: ${moment()
+			.subtract(30, "days")
+			.unix()}}, first:1000, ) {
+			id
+			timestamp
+			ethPrice
+			ethrisePrice
+		}
+	}`);
 	const { data: dataFLI, loading: loadingFLI } = useFetch(
 		"https://api.coingecko.com/api/v3/coins/eth-2x-flexible-leverage-index/market_chart?vs_currency=usd&days=30"
 	);
@@ -31,14 +40,20 @@ export default function PriceComparison() {
 						subtitle="ETH vs ETHRISE"
 						data={[
 							["date", "ETH Price", "ETHRISE Price"],
-							...dataETHRISE.map((item, index) => [
-								moment(item.timestamp).format("DD MMM YY"),
-								parseFloat(dataETH.prices[index][1]),
-								parseFloat(item.nav),
-							]),
+							...dataETHRISE.hourlyPriceDatas.map(
+								(item, index) => [
+									moment(
+										parseInt(item.timestamp) * 1000
+									).format("DD MMM YY"),
+									parseFloat(dataETH.prices[index][1]),
+									parseFloat(item.ethrisePrice),
+								]
+							),
 						]}
 					/>
 				</Col>
+			</Row>
+			<Row>
 				<Col>
 					<Line
 						title="Price Comparison"
@@ -59,11 +74,15 @@ export default function PriceComparison() {
 						subtitle="ETH2X-FLI vs ETHRISE"
 						data={[
 							["date", "ETH2X-FLI Price", "ETHRISE Price"],
-							...dataETHRISE.map((item, index) => [
-								moment(item.timestamp).format("DD MMM YY"),
-								parseFloat(dataFLI.prices[index][1]),
-								parseFloat(item.nav),
-							]),
+							...dataETHRISE.hourlyPriceDatas.map(
+								(item, index) => [
+									moment(
+										parseInt(item.timestamp) * 1000
+									).format("DD MMM YY"),
+									parseFloat(dataFLI.prices[index][1]),
+									parseFloat(item.ethrisePrice),
+								]
+							),
 						]}
 					/>
 				</Col>

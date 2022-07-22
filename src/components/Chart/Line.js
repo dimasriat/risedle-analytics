@@ -15,7 +15,7 @@ export default function Line(props) {
 					subtitle,
 				},
 				legend: {
-					position: "none",
+					// position: "none",
 				},
 				series: (() => {
 					const series = {};
