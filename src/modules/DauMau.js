@@ -23,7 +23,7 @@ export default function DauMau() {
 	if (loading)
 		return (
 			<p>
-				<b>loading... 🙏</b>
+				<b>loading data</b>
 			</p>
 		);
 	return (

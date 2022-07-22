@@ -22,7 +22,7 @@ export default function Revenue() {
 	if (loading || loadingETH)
 		return (
 			<p>
-				<b>loading... 🙏</b>
+				<b>loading data</b>
 			</p>
 		);
 	const ethPriceUSD = parseFloat(

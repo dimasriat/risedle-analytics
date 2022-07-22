@@ -27,7 +27,7 @@ export default function PriceComparison() {
 	if (loadingETHRISE || loadingETH || loadingFLI)
 		return (
 			<p>
-				<b>loading... 🙏</b>
+				<b>loading data</b>
 			</p>
 		);
 

@@ -18,7 +18,7 @@ export default function Volume() {
 	if (loading)
 		return (
 			<p>
-				<b>loading... 🙏</b>
+				<b>loading data</b>
 			</p>
 		);
 	return (

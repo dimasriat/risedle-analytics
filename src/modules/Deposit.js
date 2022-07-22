@@ -20,7 +20,7 @@ export default function Deposit() {
 	if (loading)
 		return (
 			<p>
-				<b>loading... 🙏</b>
+				<b>loading data</b>
 			</p>
 		);
 	const dataDaily = [];
